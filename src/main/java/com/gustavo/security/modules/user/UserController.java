@@ -1,6 +1,7 @@
 package com.gustavo.security.modules.user;
 
 import com.gustavo.security.modules.user.entities.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class UserController {
   }
 
   @PostMapping
-  public User create(@RequestBody User user){
+  public ResponseEntity<User> create(@RequestBody User user){
     return userService.create(user);
   }
 }
