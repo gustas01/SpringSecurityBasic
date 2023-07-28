@@ -29,13 +29,14 @@ public class TokenService {
     this.httpServletResponse = httpServletResponse;
   }
 
-  public HttpServletResponse generateToken(AuthenticationDTO user) {
+  public HttpServletResponse generateToken(User user) {
     try {
       Map<String, String> tokenPayload = new HashMap<>();
-      tokenPayload.put("username", user.password());
+      tokenPayload.put("username", user.getName());
 
       Algorithm algorithm = Algorithm.HMAC256(secret);
-      String token = JWT.create().withIssuer("auth-api").withSubject(user.username())
+      String token = JWT.create().withIssuer("auth-api")
+              .withSubject(user.getUsername())
               .withPayload(tokenPayload)
               .withExpiresAt(generateExpirationDate())
               .sign(algorithm);

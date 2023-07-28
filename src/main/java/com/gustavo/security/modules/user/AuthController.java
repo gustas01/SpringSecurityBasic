@@ -36,7 +36,7 @@ public class AuthController {
 
     Authentication usernamePassoword = new UsernamePasswordAuthenticationToken(user.username(), user.password());
     var auth = this.authenticationManager.authenticate(usernamePassoword);
-    var token = tokenService.generateToken(user);
+    var token = tokenService.generateToken((User) auth.getPrincipal());
 
 //    Map<String, HttpServletResponse> tokenObject = new HashMap<>();
 //    tokenObject.put("token", token);
