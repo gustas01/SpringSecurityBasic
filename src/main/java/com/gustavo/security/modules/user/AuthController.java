@@ -34,18 +34,14 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity login( @RequestBody @NotNull AuthenticationDTO user){
 
-//    Authentication usernamePassoword = new UsernamePasswordAuthenticationToken(user.username(), user.password());
-//    var auth = this.authenticationManager.authenticate(usernamePassoword);
-    User user1 = (User) userRepository.findByusername(user.username());
-    if(user1 == null || !(new BCryptPasswordEncoder().matches( user.password(), user1.getPassword()))){
-      return ResponseEntity.badRequest().build();
-    }
+    Authentication usernamePassoword = new UsernamePasswordAuthenticationToken(user.username(), user.password());
+    var auth = this.authenticationManager.authenticate(usernamePassoword);
     var token = tokenService.generateToken(user);
 
-    Map<String, String> tokenObject = new HashMap<>();
-    tokenObject.put("token", token);
+//    Map<String, HttpServletResponse> tokenObject = new HashMap<>();
+//    tokenObject.put("token", token);
 
-    return ResponseEntity.ok(tokenObject);
+    return ResponseEntity.ok("Autenticação realizada com sucesso!");
   }
 
   @PostMapping("/register")
