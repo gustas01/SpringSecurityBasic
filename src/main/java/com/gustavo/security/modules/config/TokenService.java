@@ -29,7 +29,7 @@ public class TokenService {
     this.httpServletResponse = httpServletResponse;
   }
 
-  public HttpServletResponse generateToken(User user) {
+  public void generateToken(User user) {
     try {
       Map<String, String> tokenPayload = new HashMap<>();
       tokenPayload.put("username", user.getName());
@@ -42,9 +42,12 @@ public class TokenService {
               .sign(algorithm);
       Cookie cookie = new Cookie("token", token);
       cookie.setHttpOnly(true);
+      cookie.setPath("/");
+      cookie.setMaxAge(90000);
+      cookie.setSecure(true);
       httpServletResponse.addCookie(cookie);
 //      httpServletResponse.getWriter().write("Token gerado com sucesso");
-      return httpServletResponse;
+//      return httpServletResponse;
     } catch (JWTCreationException exception) {
       throw new RuntimeException("Erro ao gerar token", exception);
     }

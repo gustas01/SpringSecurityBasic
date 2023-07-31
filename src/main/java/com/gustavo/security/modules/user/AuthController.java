@@ -5,15 +5,13 @@ import com.gustavo.security.modules.user.DTOs.AuthenticationDTO;
 import com.gustavo.security.modules.user.DTOs.RegisterDTO;
 import com.gustavo.security.modules.user.entities.User;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +34,7 @@ public class AuthController {
 
     Authentication usernamePassoword = new UsernamePasswordAuthenticationToken(user.username(), user.password());
     var auth = this.authenticationManager.authenticate(usernamePassoword);
-    var token = tokenService.generateToken((User) auth.getPrincipal());
-
+    tokenService.generateToken((User) auth.getPrincipal());
 //    Map<String, HttpServletResponse> tokenObject = new HashMap<>();
 //    tokenObject.put("token", token);
 
